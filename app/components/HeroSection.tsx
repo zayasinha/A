@@ -14,10 +14,6 @@ export default function HeroSection() {
     else          { videoRef.current.play();  setPlaying(true);  }
   };
 
-  interface StatItem {
-    num: string;
-    label: string;
-  }
 
   interface ServiceChip {
     label: string;
@@ -70,35 +66,18 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
             >
-              <Link href="/booking" className="btn-primary">
+              <Link 
+                href="https://calendly.com/dr-shoba-kapoor/30min" 
+                className="btn-primary text-lg px-8 py-4 shadow-xl hover:shadow-2xl transition-all"
+              >
+                <span>📞</span>
                 Book a Free Call
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="ml-2">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </Link>
-              <a href="#services" className="btn-outline">
-                Explore Services
-              </a>
             </motion.div>
 
-            {/* Stats strip */}
-            <motion.div
-              className="mt-16 flex gap-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-            >
-              {([
-                { num: '200+', label: 'Professionals Guided' },
-                { num: '3', label: 'Core Programmes' },
-                { num: '10+', label: 'Years Experience' },
-              ] as StatItem[]).map((s) => (
-                <div key={s.label}>
-                  <p className="text-3xl font-semibold text-[--c-navy]" style={{ letterSpacing: '-0.03em' }}>{s.num}</p>
-                  <p className="text-sm text-[--c-muted] mt-0.5">{s.label}</p>
-                </div>
-              ))}
-            </motion.div>
           </div>
 
           {/* ── Right column: Video + Service cards ── */}
@@ -158,29 +137,6 @@ export default function HeroSection() {
               </AnimatePresence>
             </motion.div>
 
-            {/* Service preview chips */}
-            <motion.div
-              className="grid grid-cols-3 gap-3"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-            >
-              {([
-                { label: 'Free Call', icon: '📞', href: '/booking' },
-                { label: 'Webinars', icon: '🎓', href: '#services' },
-                { label: 'Courses',  icon: '📚', href: '/courses' },
-              ] as ServiceChip[]).map((item) => (
-                <Link key={item.label} href={item.href}>
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: '0 12px 32px rgba(26,46,107,0.12)' }}
-                    className="card p-4 flex flex-col items-center gap-2 text-center cursor-pointer"
-                  >
-                    <span className="text-2xl">{item.icon}</span>
-                    <span className="text-sm font-semibold text-[--c-navy]">{item.label}</span>
-                  </motion.div>
-                </Link>
-              ))}
-            </motion.div>
           </div>
         </div>
       </div>

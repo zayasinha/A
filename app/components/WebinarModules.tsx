@@ -1,304 +1,198 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ScrollReveal, StaggerReveal, fadeUp, fadeLeft, fadeRight } from './AnimationHelpers';
+import { ScrollReveal, fadeUp } from './AnimationHelpers';
 
-interface Step {
-  num: string;
+interface WebinarCardContent {
+  theme: 'blue' | 'green' | 'orange';
   title: string;
-  desc: string;
-  icon: string;
-}
-
-interface ProgrammeItem {
-  icon: string;
-  title: string;
-  desc: string;
-}
-
-interface Programme {
-  number: string;
-  tag: string;
-  title: string;
-  date: string;
+  imageSrc: string;
+  description: string;
+  bullets: { icon: string; text: string }[];
+  priceTag: string;
   badge?: string;
-  badgeType?: 'warm' | 'urgent';
-  investment?: string;
-  items?: ProgrammeItem[];
-  faqs?: string[];
+  buttonText: string;
+  buttonLink: string;
 }
 
-const steps: Step[] = [
+const webinarCards: WebinarCardContent[] = [
   {
-    num: '01',
-    title: 'Free Strategy Call',
-    desc: 'We start with a 30-minute call to understand your background, goals, and timeline. Dr. Kapoor maps out a tailored roadmap.',
-    icon: '📞',
-  },
-  {
-    num: '02',
-    title: 'Programme Selection',
-    desc: 'Choose the right combination of language training, webinars, and career modules based on your specific destination in Germany.',
-    icon: '🗺️',
-  },
-  {
-    num: '03',
-    title: 'Active Coaching',
-    desc: 'Attend structured sessions, get CV and application reviews, and receive cultural integration training — all led by experts.',
-    icon: '🎓',
-  },
-  {
-    num: '04',
-    title: 'Placement & Integration',
-    desc: 'Land your role, navigate bureaucracy with confidence, and settle into life in Germany with continued support from Aydence.',
-    icon: '🏁',
-  },
-];
-
-const programmes: Programme[] = [
-  {
-    number: '01',
-    tag: 'Module One',
-    title: 'The German Integration Matrix',
-    date: 'April 15, 2026',
-    badge: 'Limited Slots',
-    badgeType: 'warm',
-    items: [
-      { icon: '🗣️', title: 'First German Lesson', desc: 'High-stakes professional introductions and linguistic survival skills.' },
-      { icon: '⚠️', title: 'Cultural Integration Pitfalls', desc: 'Unspoken rules of the DACH region to avoid professional missteps.' },
-      { icon: '🤝', title: 'Etiquette and Networking', desc: 'Sophisticated social protocols for high-level business networking.' },
+    theme: 'blue',
+    title: 'YOUR FIRST GERMAN CLASS with a Native Speaker',
+    imageSrc: '/first_german_class.png',
+    description: 'Welcome to your first German webinar! Learn fundamental phrases and get a real native speaker experience. Our expert teachers make learning fun and accessible for everyone.',
+    bullets: [
+      { icon: '👩‍🏫', text: 'Live Native Teacher' },
+      { icon: '🔤', text: 'Learn Basics' },
+      { icon: '🛡️', text: 'No Experience Needed' }
     ],
+    priceTag: 'Introductory Offer: ₹ 199',
+    buttonText: 'BOOK MY FIRST CLASS',
+    buttonLink: 'mailto:Info@aydence.de'
   },
   {
-    number: '02',
-    tag: 'Module Two',
-    title: 'Scientific Superiority & PhD Culture',
-    date: 'May 12, 2026',
-    investment: '€89.00',
-    items: [
-      { icon: '🔬', title: 'Research Environment', desc: 'Infrastructure and systems logic of German research institutes.' },
-      { icon: '🎓', title: 'Professor Relationships', desc: 'The "Doktorvater" dynamic and power structures in academia.' },
-      { icon: '💰', title: 'Funding & Grants', desc: 'Securing sustainable PhD funding and navigating stipends.' },
-      { icon: '🏢', title: 'Employer Expectations', desc: 'What industrial partners demand from world-class researchers.' },
+    theme: 'green',
+    title: 'CASUAL GERMAN SPEAKING SESSIONS (B1.1+)',
+    imageSrc: '/casual_speaking_sessions.png',
+    description: 'Refine your German speaking skills in a relaxed, small-group environment (B1.1+). Our guided sessions help you speak more naturally.',
+    bullets: [
+      { icon: '💬', text: 'Intermediate Conversation' },
+      { icon: '🧭', text: 'Native Speaker Guidance' },
+      { icon: '👥', text: 'Small Group' }
     ],
+    priceTag: 'Starting From: ₹ 499',
+    buttonText: 'JOIN A SESSION',
+    buttonLink: 'mailto:Info@aydence.de'
   },
   {
-    number: '03',
-    tag: 'Module Three',
-    title: 'Career Architecture: Germany Unlocked',
-    date: 'June 8, 2026',
-    badge: '16 Seats Left',
-    badgeType: 'urgent',
-    faqs: [
-      'Minimum Requirements for Entry',
-      'Apprenticeship vs Job vs Study',
-      'Government vs Private University',
-      'Is German Language Compulsory?',
+    theme: 'orange',
+    title: 'PERSONAL CAREER ROADMAP TO GERMANY',
+    imageSrc: '/personal_career_roadmap.png',
+    description: 'Chart your clear, step-by-step career path to Germany with an expert consultant.',
+    bullets: [
+      { icon: '🗺️', text: 'Custom Roadmap' },
+      { icon: '📈', text: 'Job Market Insights' },
+      { icon: '🛂', text: 'Visa Guidance' }
     ],
-  },
+    priceTag: 'Total Package: ₹ 12,000',
+    badge: 'FREE FIRST SESSION!',
+    buttonText: 'BOOK YOUR FREE CALL',
+    buttonLink: 'https://calendly.com/dr-shoba-kapoor/30min'
+  }
 ];
 
 export default function WebinarModules() {
+  const getThemeStyles = (theme: 'blue' | 'green' | 'orange') => {
+    switch (theme) {
+      case 'blue':
+        return {
+          headerBg: 'bg-[#2b658d]',
+          headerText: 'text-white',
+          btnBg: 'bg-[#1e486d] hover:bg-[#153450]',
+          btnText: 'text-white'
+        };
+      case 'green':
+        return {
+          headerBg: 'bg-[#4a8264]',
+          headerText: 'text-white',
+          btnBg: 'bg-[#3b6b50] hover:bg-[#2d523d]',
+          btnText: 'text-white'
+        };
+      case 'orange':
+        return {
+          headerBg: 'bg-[#d97c4a]',
+          headerText: 'text-white',
+          btnBg: 'bg-[#407f66] hover:bg-[#326651]', // Using a greenish button for contrast as in mockup
+          btnText: 'text-white'
+        };
+    }
+  };
+
   return (
-    <>
-      {/* ── The Process Section ──────────────────────────────────── */}
-      <section className="section-pad section-process" id="process">
-        <div className="centered-content">
+    <section className="section-pad section-white" id="programmes">
+      <div className="centered-content">
 
-          <ScrollReveal>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="section-divider m-0" />
-              <span className="eyebrow">How It Works</span>
-            </div>
-          </ScrollReveal>
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
-            <ScrollReveal custom={1}>
-              <h2 className="display-lg text-[--c-navy] max-w-sm">Your step-by-step path to Germany.</h2>
-            </ScrollReveal>
-
-            <ScrollReveal custom={2}>
-              <Link href="/booking" className="btn-primary">Begin Your Journey</Link>
-            </ScrollReveal>
+        {/* Existing optional headers, can be removed if strictly following the image, but good for context */}
+        <ScrollReveal>
+          <div className="flex items-center gap-3 mb-10">
+            <span className="section-divider m-0" />
+            <span className="eyebrow">Webinar Series</span>
           </div>
+        </ScrollReveal>
 
-          {/* Steps — horizontal timeline */}
-          <StaggerReveal className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {/* connector line — desktop only */}
-            <div className="hidden lg:block absolute top-7 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-transparent via-[rgba(26,46,107,0.15)] to-transparent z-0" />
-            {steps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                variants={fadeUp}
-                custom={i}
-                className="relative z-10"
-              >
-                <div className="card p-8 flex flex-col gap-6 h-full group" style={{ background: '#fff' }}>
-                  <div className="flex items-center gap-3">
-                    <span
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold"
-                      style={{ background: 'var(--c-navy)', color: '#fff' }}
+        <div className="flex flex-col gap-10">
+          {webinarCards.map((card, idx) => {
+            const theme = getThemeStyles(card.theme);
+            
+            return (
+              <ScrollReveal key={idx} custom={idx} variants={fadeUp}>
+                <div className="rounded-[24px] overflow-hidden bg-white shadow-xl border border-gray-100 flex flex-col group">
+                  
+                  {/* Header */}
+                  <div className={`${theme.headerBg} ${theme.headerText} py-5 px-8 text-center`}>
+                    <h3 className="text-[22px] md:text-[26px] font-bold tracking-wide uppercase">
+                      {card.title.split('with')[0]}
+                      {card.title.includes('with') && (
+                        <span className="block text-[18px] md:text-[20px] font-medium capitalize mt-1">
+                          with {card.title.split('with')[1]}
+                        </span>
+                      )}
+                    </h3>
+                  </div>
+
+                  {/* Body Grid */}
+                  <div className="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    
+                    {/* Image Area */}
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">
+                      <Image 
+                        src={card.imageSrc} 
+                        alt={card.title} 
+                        fill 
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+
+                    {/* Content Area */}
+                    <div className="flex flex-col h-full justify-between">
+                      <div>
+                        {/* Description */}
+                        <p className="text-[#333] text-[17px] leading-relaxed mb-6 font-medium">
+                          {card.description}
+                        </p>
+
+                        {/* Bullets */}
+                        <ul className="flex flex-col gap-4 mb-8">
+                          {card.bullets.map((bullet, bIdx) => (
+                            <li key={bIdx} className="flex items-center gap-4 text-[#444] font-medium">
+                              <span className="text-2xl w-8 text-center">{bullet.icon}</span>
+                              <span className="text-[16px]">{bullet.text}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Pricing & Extras */}
+                      <div className="flex items-end justify-between mb-8">
+                        {/* Empty div for spacing if no badge */}
+                        <div className="flex flex-col gap-2">
+                           {card.badge && (
+                             <span className="bg-[#fbeed4] text-[#a66a2e] font-bold text-xs px-3 py-1.5 rounded uppercase tracking-wider w-fit">
+                               {card.badge}
+                             </span>
+                           )}
+                        </div>
+                        <div className="text-right">
+                          <span className="block text-sm font-semibold text-gray-500 mb-1">
+                            {card.priceTag.split(':')[0]}:
+                          </span>
+                          <span className="text-2xl font-bold text-[#1a2e6b]">
+                            {card.priceTag.split(':')[1]}
+                          </span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  
+                  {/* Footer Button Full Width Wrapper */}
+                  <div className="px-8 pb-8 md:px-10 md:pb-10">
+                    <Link 
+                      href={card.buttonLink} 
+                      className={`w-full block text-center py-4 rounded-xl font-bold text-lg tracking-wide transition-all ${theme.btnBg} ${theme.btnText}`}
                     >
-                      {step.num}
-                    </span>
-                    <span className="text-2xl">{step.icon}</span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-[--c-navy] text-lg mb-2 leading-snug">{step.title}</h3>
-                    <p className="text-[17px] text-[--c-muted] leading-[1.6]">{step.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </StaggerReveal>
-        </div>
-      </section>
-
-      {/* ── Programmes Section ─────────────────────────────────── */}
-      <section className="section-pad section-white" id="programmes">
-        <div className="centered-content">
-
-
-
-          <ScrollReveal>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="section-divider m-0" />
-              <span className="eyebrow">Webinar Series</span>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal custom={1} className="mb-20">
-            <h2 className="display-lg text-[--c-navy] max-w-lg">Our structured programmes.</h2>
-          </ScrollReveal>
-
-
-          <div className="flex flex-col gap-32">
-
-            {programmes.map((prog, idx) => (
-              <div
-                key={idx}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${idx % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}
-              >
-                {/* Text */}
-                <ScrollReveal variants={idx % 2 === 1 ? fadeRight : fadeLeft} className={idx % 2 === 1 ? 'lg:col-start-2' : ''}>
-                  <div>
-                    <p className="eyebrow mb-3">{prog.tag}</p>
-                    <h3 className="text-2xl lg:text-3xl font-semibold text-[--c-navy] mb-6 leading-tight">{prog.title}</h3>
-
-                    {prog.items && (
-                      <div className={`grid gap-8 mb-10 ${prog.items.length === 4 ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                        {prog.items.map((item) => (
-                          <motion.div
-                            key={item.title}
-                            whileHover={{ x: 4 }}
-                            className="flex gap-4"
-                          >
-                            <span className="text-2xl mt-0.5 shrink-0">{item.icon}</span>
-                            <div>
-                              <p className="font-semibold text-[20px] text-[--c-navy]">{item.title}</p>
-                              <p className="text-[18px] text-[--c-muted] leading-relaxed mt-1 font-light">{item.desc}</p>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    )}
-
-
-                    {prog.faqs && (
-                      <div className="flex flex-col gap-2 mb-8">
-                        {prog.faqs.map((faq, i) => (
-                          <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: -16 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.08 }}
-                            whileHover={{ x: 5 }}
-                            className="flex items-center justify-between py-3 px-4 rounded-xl border border-gray-100 group cursor-pointer hover:bg-[--bg-services] transition-colors"
-                          >
-                            <span className="flex items-center gap-3 text-sm font-medium text-[--c-text]">
-                              <span className="text-xs font-mono text-[--c-navy-light]">{String(i + 1).padStart(2, '0')}</span>
-                              {faq}
-                            </span>
-                            <span className="text-[--c-navy-light] group-hover:translate-x-1 transition-transform">→</span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    )}
-
-                    <Link href="/booking" className="btn-primary">
-                      {prog.badge === 'Limited Slots' ? 'Book Now' : prog.badge ? 'Secure My Spot' : 'Book Now'}
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                      </svg>
+                      {card.buttonText}
                     </Link>
                   </div>
-                </ScrollReveal>
 
-                {/* CTA Card */}
-                <ScrollReveal variants={idx % 2 === 1 ? fadeLeft : fadeRight} className={idx % 2 === 1 ? 'lg:col-start-1' : ''}>
-                  <motion.div
-                    whileHover={{ y: -6, boxShadow: '0 32px 80px rgba(26,46,107,0.12)' }}
-                    className="card overflow-hidden"
-                  >
-                    {/* Thumbnail */}
-                    <div className="aspect-video bg-gradient-to-br from-[#c5cde8] to-[#8aaacc] relative flex items-center justify-center group cursor-pointer overflow-hidden">
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full"
-                        whileHover={{ translateX: '200%' }}
-                        transition={{ duration: 0.8 }}
-                      />
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        className="w-12 h-12 bg-white/80 rounded-full flex items-center justify-center shadow-lg z-10"
-                      >
-                        <svg className="w-5 h-5 text-[--c-navy] ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
-                        </svg>
-                      </motion.div>
-                      <span className="absolute top-3 right-3 bg-[--c-navy] text-white text-xs font-semibold px-3 py-1 rounded-full">
-                        {prog.date}
-                      </span>
-                    </div>
-
-                    <div className="p-6 flex flex-col gap-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-xs text-[--c-subtle] uppercase tracking-wide mb-1">Webinar Date</p>
-                          <p className="font-semibold text-[--c-navy]">{prog.date}</p>
-                        </div>
-                        {prog.badge && (
-                          <motion.span
-                            animate={prog.badgeType === 'urgent' ? { scale: [1, 1.04, 1] } : {}}
-                            transition={{ duration: 1.8, repeat: Infinity }}
-                            className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                              prog.badgeType === 'urgent'
-                                ? 'bg-red-50 text-red-500 border border-red-200'
-                                : 'bg-amber-50 text-amber-600 border border-amber-200'
-                            }`}
-                          >
-                            {prog.badge}
-                          </motion.span>
-                        )}
-                      </div>
-                      {prog.investment && (
-                        <div>
-                          <p className="text-xs text-[--c-subtle] uppercase tracking-wide mb-1">Investment</p>
-                          <p className="text-2xl font-semibold text-[--c-navy]">{prog.investment}</p>
-                        </div>
-                      )}
-                      {prog.badgeType === 'urgent' && (
-                        <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3">
-                          <p className="text-red-600 text-xs font-semibold uppercase tracking-wide">⚠ Last Opportunity</p>
-                          <p className="text-red-700 text-sm font-semibold mt-0.5">{prog.date}</p>
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                </ScrollReveal>
-              </div>
-            ))}
-          </div>
+                </div>
+              </ScrollReveal>
+            );
+          })}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

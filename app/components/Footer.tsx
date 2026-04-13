@@ -25,14 +25,12 @@ const quickLinks: QuickLink[] = [
   { label: 'Services', href: '#services' },
   { label: 'How It Works', href: '#process' },
   { label: 'Programmes', href: '#programmes' },
-  { label: 'Book a Call', href: '/booking' },
-  { label: 'Courses', href: '/courses' },
+  { label: 'Book a Call', href: 'https://calendly.com/dr-shoba-kapoor/30min' },
+  { label: 'Courses', href: '/#short-term-courses' },
 ];
 
 const legal: LegalLink[] = [
-  { label: 'Impressum', href: '/impressum' },
-  { label: 'Privacy Policy', href: '/datenschutz' },
-  { label: 'Terms of Use', href: '#' },
+  { label: 'Terms of Use', href: '/agb' },
 ];
 
 const socials: SocialLink[] = [
@@ -95,7 +93,7 @@ export default function Footer() {
           <ScrollReveal custom={3}>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href="/booking"
+                href="https://calendly.com/dr-shoba-kapoor/30min"
                 className="btn-primary text-base px-8 py-4"
                 style={{ background: '#fff', color: 'var(--c-navy)' }}
               >
@@ -128,10 +126,10 @@ export default function Footer() {
               <Link href="/">
                 <Image
                   src="/Aydence logo.png"
-                  alt="Aydence"
-                  width={160}
-                  height={56}
-                  className="h-12 w-auto object-contain brightness-0 invert"
+                  alt="Aydence Logo"
+                  width={320}
+                  height={112}
+                  className="h-12 md:h-16 lg:h-20 w-auto object-contain brightness-0 invert"
                   priority
                 />
               </Link>
@@ -211,18 +209,15 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <motion.div
-          className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4"
+          className="mt-16 pt-8 border-t border-white/5 flex justify-center items-center gap-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <p className="text-white/25 text-xs font-light">
+          <p className="text-white/25 text-xs font-light text-center">
             © {new Date().getFullYear()} Aydence · Dr. rer. nat. Shoba Kapoor. All rights reserved.
           </p>
-          <Link href="/datenschutz" className="text-white/25 hover:text-white/50 text-xs transition-colors font-light">
-            Privacy Policy
-          </Link>
         </motion.div>
       </div>
     </footer>

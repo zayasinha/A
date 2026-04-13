@@ -10,10 +10,11 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { label: 'Services',  href: '/#services' },
-  { label: 'Process',   href: '/#process' },
-  { label: 'Booking',   href: '/booking' },
-  { label: 'Courses',   href: '/courses' },
+  { label: 'Free Call', href: 'https://calendly.com/dr-shoba-kapoor/30min' },
+  { label: 'Webinars',  href: '/#programmes' },
+  { label: 'Courses',   href: '/#short-term-courses' },
+  { label: 'About',     href: '/#about-doctor' },
+  { label: 'Contact',   href: '/contact' },
 ];
 
 export default function Navbar() {
@@ -60,10 +61,10 @@ export default function Navbar() {
                 <Image
                   src="/Aydence logo.png"
                   alt="Aydence Logo"
-                  width={160}
-                  height={56}
+                  width={320}
+                  height={112}
                   priority
-                  className="h-20 w-auto object-contain scale-[1.8] translate-x-3"
+                  className="h-10 md:h-14 lg:h-16 w-auto object-contain"
                 />
               </Link>
             </motion.div>
@@ -91,17 +92,7 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Desktop CTA — removed "Book Now" per user request; contact link instead */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4 }}
-              className="hidden md:flex items-center gap-3"
-            >
-              <a href="mailto:Info@aydence.de" className="btn-outline text-sm px-5 py-2.5">
-                Contact
-              </a>
-            </motion.div>
+
 
             {/* Mobile hamburger */}
             <motion.button
@@ -159,8 +150,8 @@ export default function Navbar() {
                 transition={{ delay: 0.22, duration: 0.3 }}
                 className="mt-3"
               >
-                <Link href="/booking" onClick={() => setMenuOpen(false)} className="btn-primary block text-center w-full">
-                  Book a Free Call
+                <Link href="https://calendly.com/dr-shoba-kapoor/30min" onClick={() => setMenuOpen(false)} className="btn-primary block text-center w-full">
+                  Request a Free Call
                 </Link>
               </motion.div>
             </div>
